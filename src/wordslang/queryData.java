@@ -74,7 +74,11 @@ public class queryData {
             
             String sql = "insert into WORDSLANG (Slag, Meaning) values ('" + word +"', '"+meaning + "')";
             
-            int rowCount = statement.executeUpdate(sql);
+            try {
+                int rowCount = statement.executeUpdate(sql);
+            } catch (Exception ex) {
+                System.out.print(ex.getMessage());
+            }
             
             //Đọc dòng kế tiếp
             line = br.readLine();
