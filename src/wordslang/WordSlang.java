@@ -11,11 +11,8 @@ import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import wordslang.queryData;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -36,12 +33,13 @@ public class WordSlang {
         WordSlang wordSlang = new WordSlang();
     }
 
-    public WordSlang() throws IOException {
+    public WordSlang() throws IOException {        
+        history = new ArrayList<>();
         handle();
     };
     
     public void readFile() throws FileNotFoundException, IOException {
-        wordSlang = new HashMap<String, String>();
+        wordSlang = new HashMap<>();
         //Đọc file
         FileReader fr = new FileReader("slang.txt");
         BufferedReader br = new BufferedReader(fr);
@@ -65,17 +63,35 @@ public class WordSlang {
     }
     
     public String searchBySlangWord(String word) {
-        return wordSlang.get(word);
-    }
-    
-    public void saveHistory(String word) {
-        history.add(word);
+        if(wordSlang.containsKey(word)) {            
+            return wordSlang.get(word);
+        }
+        return null;
     }
     
     public void inCase1() {
         System.out.print("Input word slang: ");
         String word = ip.nextLine();
-        System.out.println(searchBySlangWord(word));
+        String ans = searchBySlangWord(word);
+        if(ans!=null) {
+            System.out.println(ans);
+            history.add(word);
+        }
+        else {
+            System.out.println("There is no information of " + word);
+        }
+    }
+    
+    public void inCase3() {
+        if (history.isEmpty()) {
+            System.out.println("There is no history information");
+        }
+        else {
+            System.out.println("Search history:");
+            for(String it:history) {
+                System.out.println(it);
+            }
+        }
     }
     
     public void menu() {
@@ -83,7 +99,7 @@ public class WordSlang {
 	System.out.println("0. Exit");
 	System.out.println("1. Search by slang word");
 	System.out.println("2. ");
-	System.out.println("3. ");
+	System.out.println("3. Show history");
 	System.out.println("4. ");
 	System.out.println("5. ");
 	System.out.println("6. ");
@@ -104,9 +120,8 @@ public class WordSlang {
             System.out.println("There is no information");
         }        
         
-        
         //Choose option
-        int choice = 0;
+        int choice;
         System.out.print("Choose your option: ");
         Scanner ip = new Scanner(System.in);
         choice = parseInt(ip.nextLine());
@@ -119,6 +134,7 @@ public class WordSlang {
                 case 2:
                     break;
                 case 3:
+                    inCase3();
                     break;
                 case 4:
                     break;
