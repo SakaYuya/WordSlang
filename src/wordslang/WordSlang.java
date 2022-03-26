@@ -31,11 +31,11 @@ public class WordSlang {
     public static void main(String[] args) throws SQLException, ClassNotFoundException, FileNotFoundException, IOException{
         // TODO code application logic here
         WordSlang wordSlang = new WordSlang();
+        wordSlang.handle();
     }
 
     public WordSlang() throws IOException {        
         history = new ArrayList<>();
-        handle();
     };
     
     public void readFile() throws FileNotFoundException, IOException {
@@ -94,15 +94,32 @@ public class WordSlang {
         }
     }
     
+    public void inCase4() {        
+        //Input and check slang word
+        System.out.print("Input new slang word: ");
+        String slang = ip.nextLine();
+        if(wordSlang.containsKey(slang)) {
+            System.out.println("This slang word is already defined");
+            return;
+        }
+        
+        //Input slang word's definition
+        System.out.print("Definition of slang word: ");
+        String defi = ip.nextLine();
+        
+        wordSlang.put(slang, defi);
+    }
+
+    
     public void menu() {
         System.out.println("---MENU---");
 	System.out.println("0. Exit");
 	System.out.println("1. Search by slang word");
 	System.out.println("2. ");
 	System.out.println("3. Show history");
-	System.out.println("4. ");
-	System.out.println("5. ");
-	System.out.println("6. ");
+	System.out.println("4. Add new slang word");
+	System.out.println("5. Edit slang word");
+	System.out.println("6. Delete slang word");
 	System.out.println("7. ");
         System.out.println("8. ");
         System.out.println("9. ");
@@ -137,10 +154,13 @@ public class WordSlang {
                     inCase3();
                     break;
                 case 4:
+                    inCase4();
                     break;
                 case 5:
+                    //inCase5();
                     break;
                 case 6:
+                    //inCase6();
                     break;
                 case 7:
                     break;
