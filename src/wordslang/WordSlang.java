@@ -12,6 +12,7 @@ import static java.lang.Integer.parseInt;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -109,7 +110,23 @@ public class WordSlang {
         
         wordSlang.put(slang, defi);
     }
-
+    
+    public void inCase5() {
+        //Get slang word to edit
+        System.out.println("Input slang word: ");
+        String slang = ip.nextLine();
+        if(!wordSlang.containsKey(slang)) {
+            System.out.println("This slang word is not exist!");
+            return;
+        }
+        
+        System.out.println(slang + ": " + wordSlang.get(slang));
+        System.out.print("Input new definition of " + slang + ": ");        
+        String defi = ip.nextLine();
+        
+        wordSlang.replace(slang, defi);
+    }
+    
     
     public void menu() {
         System.out.println("---MENU---");
@@ -120,8 +137,8 @@ public class WordSlang {
 	System.out.println("4. Add new slang word");
 	System.out.println("5. Edit slang word");
 	System.out.println("6. Delete slang word");
-	System.out.println("7. ");
-        System.out.println("8. ");
+	System.out.println("7. Reset slang word dictionary");
+        System.out.println("8. On this day slang word");
         System.out.println("9. ");
 	System.out.println("----------");
     }
@@ -135,7 +152,7 @@ public class WordSlang {
             readFile();
         } catch (IOException ex) {
             System.out.println("There is no information");
-        }        
+        }
         
         //Choose option
         int choice;
@@ -157,14 +174,16 @@ public class WordSlang {
                     inCase4();
                     break;
                 case 5:
-                    //inCase5();
+                    inCase5();
                     break;
                 case 6:
-                    //inCase6();
+                    inCase6();
                     break;
                 case 7:
+                    inCase7();
                     break;
                 case 8:
+                    inCase8();
                     break;
                 case 9:
                     break;
