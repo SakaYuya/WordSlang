@@ -128,6 +128,27 @@ public class WordSlang {
     }
     
     
+    public void inCase6() {
+        //Get slang word to delete
+        System.out.print("Input slang word: ");
+        String slang = ip.nextLine();
+        if(!wordSlang.containsKey(slang)) {
+            System.out.println("This slang word is not exist!");
+            return;
+        }
+        
+        System.out.println("Are you sure you want to delete: (y/n)");
+        System.out.println(slang + ": " + wordSlang.get(slang));
+        
+        String ans;
+        ans = ip.nextLine();
+        if(ans.toLowerCase().equals("y")) {
+            wordSlang.remove(slang);
+        }
+    }
+    
+
+    
     public void menu() {
         System.out.println("---MENU---");
 	System.out.println("0. Exit");
