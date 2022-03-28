@@ -83,6 +83,16 @@ public class WordSlang {
         }
     }
     
+    public void inCase2() {
+        System.out.print("Input definition: ");
+        String defi = ip.nextLine();
+        wordSlang.forEach((key, value) -> {
+            if(value.contains(defi)) {
+                System.out.println(key + ": " + value);
+            }
+        });
+    }
+    
     public void inCase3() {
         if (history.isEmpty()) {
             System.out.println("There is no history information");
@@ -147,20 +157,32 @@ public class WordSlang {
         }
     }
     
-
+    public void inCase7() {
+        //Get info from file
+        try {
+            readFile();
+            System.out.println("Succesfully!!!");
+        } catch (IOException ex) {
+            System.out.println("There is no information");
+        } 
+    }
+    
+   
     
     public void menu() {
         System.out.println("---MENU---");
 	System.out.println("0. Exit");
 	System.out.println("1. Search by slang word");
-	System.out.println("2. ");
+	System.out.println("2. Search by definition");
 	System.out.println("3. Show history");
 	System.out.println("4. Add new slang word");
 	System.out.println("5. Edit slang word");
 	System.out.println("6. Delete slang word");
 	System.out.println("7. Reset slang word dictionary");
         System.out.println("8. On this day slang word");
-        System.out.println("9. ");
+        System.out.println("9. Quiz (choose definition of slang word)");       
+        System.out.println("10. Quiz (choose slang word of definition)");
+
 	System.out.println("----------");
     }
     
@@ -181,12 +203,13 @@ public class WordSlang {
         Scanner ip = new Scanner(System.in);
         choice = parseInt(ip.nextLine());
         
-        while(choice > 0 && choice <= 9) {
+        while(choice > 0 && choice <= 10) {
             switch(choice) {
                 case 1:
                     inCase1();
                     break;
                 case 2:
+                    inCase2();
                     break;
                 case 3:
                     inCase3();
@@ -207,6 +230,10 @@ public class WordSlang {
                     inCase8();
                     break;
                 case 9:
+                    inCase9();
+                    break;
+                case 10:
+                    inCase10();
                     break;
             }
             System.out.print("Choose your option: ");
