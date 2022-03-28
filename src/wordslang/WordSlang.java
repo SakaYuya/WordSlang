@@ -167,7 +167,61 @@ public class WordSlang {
         } 
     }
     
-   
+    public void inCase8() {
+        //References: https://stackoverflow.com/questions/929554/is-there-a-way-to-get-the-value-of-a-hashmap-randomly-in-java
+        Random generator = new Random();
+        Object[] keys = wordSlang.keySet().toArray();
+        Object randomKey = keys[generator.nextInt(keys.length)];
+        System.out.println(randomKey + ": " + wordSlang.get((String) randomKey));
+    }
+    
+    public void inCase9() {
+        //Get random slang word
+        Random generator = new Random();
+        Object[] keys = wordSlang.keySet().toArray();
+        Object randomKey = keys[generator.nextInt(keys.length)];
+        //Create array of choices
+        int numberOfChoices = 4;
+        String[] choices = new String[numberOfChoices];
+        int correctChoice = generator.nextInt(numberOfChoices);
+        choices[correctChoice] = wordSlang.get((String) randomKey);
+        for (int i=0; i<numberOfChoices; i++) {
+            String choice = (String) wordSlang.get(keys[generator.nextInt(keys.length)]);
+            if(!choice.equals(randomKey) && i!=correctChoice) {
+                choices[i] = choice;
+            }
+        }
+        //Print quiz and choices
+        System.out.println("What does '" + randomKey + "' mean?");
+        System.out.println("A. " + choices[0]);
+        System.out.println("B. " + choices[1]);
+        System.out.println("C. " + choices[2]);
+        System.out.println("D. " + choices[3]);
+        
+        //Your choice
+        String ans = ip.nextLine();
+        int yourChoice = -1;
+        switch(ans) {
+            case "a", "A":
+                yourChoice = 0;
+                break;
+            case "b", "B":
+                yourChoice = 1;
+                break;
+            case "c", "C":
+                yourChoice = 2;
+                break;
+            case "d", "D":
+                yourChoice = 3;
+                break;
+        }
+        if(yourChoice == correctChoice) {
+            System.out.println("Correct!");
+        } else {
+            System.out.println("Incorrect!");
+        }
+               
+    }   
     
     public void menu() {
         System.out.println("---MENU---");
