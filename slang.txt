@@ -1,3 +1,4 @@
+Slag`Meaning
 BBC`British Broadcasting Corporation
 BBB`Bugging Beyond Belief
 BBE`Babe
@@ -687,7 +688,6 @@ THX`Thanks
 ISWYM`I See What You Mean
 RAOK`Random Act Of Kindness
 TIA`Thanks In Advance
-#1`Number one
 TID`Take It Down
 GAWJUS`Gorgeous
 TIC`Tongue in Cheek
@@ -1095,6 +1095,7 @@ T^T`Crying
 SEKC`Sexy
 LULAB`Love You Like A Brother
 THNX`Thanks
+20120532`New
 PWEASE`Babyish form of Please
 GLOMP`Hug very hard
 T_T`Crying

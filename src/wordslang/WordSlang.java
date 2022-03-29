@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -32,7 +31,7 @@ public class WordSlang {
     ArrayList<String> history;
     Scanner ip = new Scanner(System.in);
     
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, FileNotFoundException, IOException{
+    public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException{
         // TODO code application logic here
         WordSlang wordSlang = new WordSlang();
         wordSlang.handle();
@@ -69,14 +68,13 @@ public class WordSlang {
        public void saveFile(String path, HashMap<String, String> list) {        
         try {
             FileWriter fw = new FileWriter(path); 
+            //Write first line
+            fw.write("Slag`Meaning\n");
             //Write file
             list.forEach((key, value) -> {                
                 try {
                     fw.write(key+ "`" + value + "\n");
-                } catch (IOException ex) {
-                    Logger.getLogger(WordSlang.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
+                } catch (IOException ex) {}                
             });
             fw.close();
         } catch (IOException ex) {
@@ -140,6 +138,8 @@ public class WordSlang {
         String defi = ip.nextLine();
         
         wordSlang.put(slang, defi);
+        System.out.println("Successfully!!!");
+
     }
     
     public void inCase5() {
@@ -156,6 +156,7 @@ public class WordSlang {
         String defi = ip.nextLine();
         
         wordSlang.replace(slang, defi);
+        System.out.println("Successfully!!!");
     }
     
     
@@ -176,6 +177,11 @@ public class WordSlang {
         ans = ip.nextLine();
         if(ans.toLowerCase().equals("y")) {
             wordSlang.remove(slang);
+            System.out.println("Successfully!!!");
+        }
+        else {
+            System.out.println("Cannot delete this slang word!");
+
         }
     }
     
@@ -292,7 +298,8 @@ public class WordSlang {
     }
     
     public void inCase11() {
-        
+        saveFile("slang.txt", wordSlang);
+        System.out.println("Successfully!");
     }
         
     public void menu() {
@@ -307,8 +314,8 @@ public class WordSlang {
 	System.out.println("7. Reset slang word dictionary");
         System.out.println("8. On this day slang word");
         System.out.println("9. Quiz (choose definition of slang word)");       
-        System.out.println("10. Quiz (choose slang word of definition)");
-
+        System.out.println("10. Quiz (choose slang word of definition)");        
+        System.out.println("11. Save file");
 	System.out.println("----------");
     }
     
@@ -329,7 +336,7 @@ public class WordSlang {
         Scanner ip = new Scanner(System.in);
         choice = parseInt(ip.nextLine());
         
-        while(choice > 0 && choice <= 10) {
+        while(choice > 0 && choice <= 11) {
             switch(choice) {
                 case 1:
                     inCase1();
