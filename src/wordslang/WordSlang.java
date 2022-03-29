@@ -7,6 +7,7 @@ package wordslang;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.sql.SQLException;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,10 +42,10 @@ public class WordSlang {
         history = new ArrayList<>();
     };
     
-    public void readFile() throws FileNotFoundException, IOException {
+    public void readFile(String filePath) throws FileNotFoundException, IOException {
         wordSlang = new HashMap<>();
         //Đọc file
-        FileReader fr = new FileReader("slang.txt");
+        FileReader fr = new FileReader(filePath);
         BufferedReader br = new BufferedReader(fr);
         String line = br.readLine();
             
@@ -61,6 +64,24 @@ public class WordSlang {
             line = br.readLine();
         }
         fr.close();        
+    }
+    
+       public void saveFile(String path, HashMap<String, String> list) {        
+        try {
+            FileWriter fw = new FileWriter(path); 
+            //Write file
+            list.forEach((key, value) -> {                
+                try {
+                    fw.write(key+ "`" + value + "\n");
+                } catch (IOException ex) {
+                    Logger.getLogger(WordSlang.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            });
+            fw.close();
+        } catch (IOException ex) {
+            System.out.println("Cannot save file!");
+        }
     }
     
     public String searchBySlangWord(String word) {
@@ -147,8 +168,9 @@ public class WordSlang {
             return;
         }
         
-        System.out.println("Are you sure you want to delete: (y/n)");
+        System.out.println("Are you sure you want to delete:");
         System.out.println(slang + ": " + wordSlang.get(slang));
+        System.out.println("(Y/N): ");
         
         String ans;
         ans = ip.nextLine();
@@ -160,7 +182,7 @@ public class WordSlang {
     public void inCase7() {
         //Get info from file
         try {
-            readFile();
+            readFile("slangBack-up.txt");
             System.out.println("Succesfully!!!");
         } catch (IOException ex) {
             System.out.println("There is no information");
@@ -219,10 +241,60 @@ public class WordSlang {
             System.out.println("Correct!");
         } else {
             System.out.println("Incorrect!");
-        }
-               
+        }               
     }   
     
+    public void inCase10() {
+        //Get random slang word
+        Random generator = new Random();
+        Object[] keys = wordSlang.keySet().toArray();
+        Object randomKey = keys[generator.nextInt(keys.length)];
+        //Create array of choices
+        int numberOfChoices = 4;
+        String[] choices = new String[numberOfChoices];
+        int correctChoice = generator.nextInt(numberOfChoices);
+        choices[correctChoice] = (String) randomKey;
+        for (int i=0; i<numberOfChoices; i++) {
+            String choice = (String) keys[generator.nextInt(keys.length)];
+            if(!choice.equals(randomKey) && i!=correctChoice) {
+                choices[i] = wordSlang.get(choice);
+            }
+        }
+        //Print quiz and choices
+        System.out.println("What is meaning '" + wordSlang.get(randomKey) + "'?");
+        System.out.println("A. " + choices[0]);
+        System.out.println("B. " + choices[1]);
+        System.out.println("C. " + choices[2]);
+        System.out.println("D. " + choices[3]);
+        
+        //Your choice
+        String ans = ip.nextLine();
+        int yourChoice = -1;
+        switch(ans) {
+            case "a", "A":
+                yourChoice = 0;
+                break;
+            case "b", "B":
+                yourChoice = 1;
+                break;
+            case "c", "C":
+                yourChoice = 2;
+                break;
+            case "d", "D":
+                yourChoice = 3;
+                break;
+        }
+        if(yourChoice == correctChoice) {
+            System.out.println("Correct!");
+        } else {
+            System.out.println("Incorrect!");
+        }        
+    }
+    
+    public void inCase11() {
+        
+    }
+        
     public void menu() {
         System.out.println("---MENU---");
 	System.out.println("0. Exit");
@@ -246,7 +318,7 @@ public class WordSlang {
         
         //Get info from file
         try {
-            readFile();
+            readFile("slang.txt");
         } catch (IOException ex) {
             System.out.println("There is no information");
         }
@@ -289,11 +361,14 @@ public class WordSlang {
                 case 10:
                     inCase10();
                     break;
+                case 11:
+                    inCase11();
             }
             System.out.print("Choose your option: ");
             choice = parseInt(ip.nextLine());
         }
-        //Free memory        
+        //SaveFile    
+        saveFile("slang.txt", wordSlang);        
     }
 }
 
